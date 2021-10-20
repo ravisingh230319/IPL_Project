@@ -14,6 +14,7 @@ public class Ipl {
     static HashMap<String, Float> economy = new HashMap<>();
     static HashMap<String, Integer> tossWonByAllTeamInAllYear = new HashMap<>();
     static HashMap<String, Integer> totalManOfMatchForPlayerIn2016 = new HashMap<>();
+    static HashMap<String, Integer> noOfSixesHitByDhoniInAllSeason = new HashMap<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -116,6 +117,21 @@ public class Ipl {
         }
     }
 
+    public static void getNoOfSixesHitByDhoniInAllSeason(String deliveriesLine){
+        String[] delivery;
+        delivery = deliveriesLine.split(",");
+        int batsmanRuns = Integer.parseInt(delivery[15]);
+        String batsmanName = delivery[6];
+
+        if(batsmanRuns==6 && batsmanName.equals("MS Dhoni")) {
+            if (noOfSixesHitByDhoniInAllSeason.containsKey("MS Dhoni")) {
+                noOfSixesHitByDhoniInAllSeason.put("MS Dhoni", noOfSixesHitByDhoniInAllSeason.get("MS Dhoni") + 1);
+            } else {
+                noOfSixesHitByDhoniInAllSeason.put("MS Dhoni", 1);
+            }
+        }
+    }
+
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -144,6 +160,7 @@ public class Ipl {
             {
                 getExtraRunsConcededPerTeamIn2016(matchId2016, deliveriesLine);
                 topEconomicalBowlersIn2015(matchId2015, deliveriesLine);
+                getNoOfSixesHitByDhoniInAllSeason(deliveriesLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -168,6 +185,9 @@ public class Ipl {
         System.out.println();
         System.out.println("6. Total no of man of the matches for players in 2016.");
         System.out.println(totalManOfMatchForPlayerIn2016);
+        System.out.println();
+        System.out.println("7. No of sixes hit by Dhoni in all seasons.");
+        System.out.println(noOfSixesHitByDhoniInAllSeason);
 
     }
 }
