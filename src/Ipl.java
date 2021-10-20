@@ -8,6 +8,7 @@ public class Ipl {
     static HashMap<String,Integer> matchesWonByAllTeamInAllYear = new HashMap<>();
     static ArrayList<String> matchId2016 = new ArrayList<>();
     static HashMap<String,Integer> extraRunsConcededIn2016 = new HashMap<>();
+    static ArrayList<String> matchId2015 = new ArrayList<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -51,6 +52,7 @@ public class Ipl {
             }
         }
     }
+
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -68,6 +70,9 @@ public class Ipl {
                 getMatchesWonByAllTeamInAllYear(matchesLine);
                 if((matchesLine.split(","))[1].equals("2016")) {
                     matchId2016.add((matchesLine.split(","))[0]);
+                }
+                if((matchesLine.split(","))[1].equals("2015")){
+                    matchId2015.add((matchesLine.split(","))[0]);
                 }
             }
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
