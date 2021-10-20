@@ -7,6 +7,7 @@ public class Ipl {
     static HashMap<Integer, Integer> matchesPerYear = new HashMap<>();
     static HashMap<String,Integer> matchesWonByAllTeamInAllYear = new HashMap<>();
     static ArrayList<String> matchId2016 = new ArrayList<>();
+    static HashMap<String,Integer> extraRunsConcededIn2016 = new HashMap<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -33,6 +34,19 @@ public class Ipl {
         }
     }
 
+    public static void getExtraRunsConcededPerTeamIn2016(ArrayList<String> matchesId, String deliveriesLine){
+        String[] delivery;
+        delivery = deliveriesLine.split(",");
+        String bowlingTeam = delivery[3];
+        int extraRunsConceded = Integer.parseInt(delivery[16]);
+        if(matchesId.contains(delivery[0]))
+        {
+            if(extraRunsConcededIn2016.containsKey(bowlingTeam))
+                extraRunsConcededIn2016.put(bowlingTeam, extraRunsConcededIn2016.get(bowlingTeam) + extraRunsConceded);
+            else
+                extraRunsConcededIn2016.put(bowlingTeam, extraRunsConceded);
+        }
+    }
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -54,6 +68,7 @@ public class Ipl {
             }
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
             {
+                getExtraRunsConcededPerTeamIn2016(matchId2016, deliveriesLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,5 +76,7 @@ public class Ipl {
         System.out.println(matchesPerYear);
         System.out.println();
         System.out.println(matchesWonByAllTeamInAllYear);
+        System.out.println();
+        System.out.println(extraRunsConcededIn2016);
     }
 }
