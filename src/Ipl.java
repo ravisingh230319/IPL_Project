@@ -1,8 +1,21 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.*;
 
 public class Ipl {
+    static HashMap<Integer, Integer> matchesPerYear = new HashMap<>();
+
+    public static void getMatchesPerYear(String matchesLine){
+        String[] match;
+        match = matchesLine.split(",");
+        int year = Integer.parseInt(match[1]);
+
+        if(matchesPerYear.containsKey(year))
+            matchesPerYear.put(year, matchesPerYear.get(year) + 1);
+        else
+            matchesPerYear.put(year, 1);
+    }
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -16,6 +29,7 @@ public class Ipl {
             deliveriesBufferedReader.readLine();
 
             while((matchesLine = matchesBufferedReader.readLine()) != null) {
+                getMatchesPerYear(matchesLine);
             }
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
             {
@@ -23,5 +37,6 @@ public class Ipl {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(matchesPerYear);
     }
 }
