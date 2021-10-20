@@ -11,8 +11,9 @@ public class Ipl {
     static ArrayList<String> matchId2015 = new ArrayList<>();
     static HashMap<String, Integer> totalRuns = new HashMap<>();
     static HashMap<String, Integer> legalDelivery = new HashMap<>();
-    static HashMap<String,Float> economy = new HashMap<>();
-    static HashMap<String,Integer> tossWonByAllTeamInAllYear = new HashMap<>();
+    static HashMap<String, Float> economy = new HashMap<>();
+    static HashMap<String, Integer> tossWonByAllTeamInAllYear = new HashMap<>();
+    static HashMap<String, Integer> totalManOfMatchForPlayerIn2016 = new HashMap<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -100,6 +101,21 @@ public class Ipl {
         }
     }
 
+    public static void getTotalManOfMatchForPlayerIn2016(String matchesLine) {
+        String[] match;
+        match = matchesLine.split(",");
+        String playerOfMatch = match[13];
+        int year = Integer.parseInt(match[1]);
+
+        if(year==2016 && !playerOfMatch.equals("")) {
+            if (totalManOfMatchForPlayerIn2016.containsKey(playerOfMatch)) {
+                totalManOfMatchForPlayerIn2016.put(playerOfMatch, totalManOfMatchForPlayerIn2016.get(playerOfMatch) + 1);
+            } else {
+                totalManOfMatchForPlayerIn2016.put(playerOfMatch, 1);
+            }
+        }
+    }
+
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -113,15 +129,16 @@ public class Ipl {
             deliveriesBufferedReader.readLine();
 
             while((matchesLine = matchesBufferedReader.readLine()) != null) {
-                getMatchesPerYear(matchesLine);
-                getMatchesWonByAllTeamInAllYear(matchesLine);
                 if((matchesLine.split(","))[1].equals("2016")) {
                     matchId2016.add((matchesLine.split(","))[0]);
                 }
                 if((matchesLine.split(","))[1].equals("2015")) {
                     matchId2015.add((matchesLine.split(","))[0]);
                 }
+                getMatchesPerYear(matchesLine);
+                getMatchesWonByAllTeamInAllYear(matchesLine);
                 getTossWonByAllTeamInAllYear(matchesLine);
+                getTotalManOfMatchForPlayerIn2016(matchesLine);
             }
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
             {
@@ -148,5 +165,9 @@ public class Ipl {
         System.out.println();
         System.out.println("5. Number of toss won of all teams over all the years of IPL.");
         System.out.println(tossWonByAllTeamInAllYear);
+        System.out.println();
+        System.out.println("6. Total no of man of the matches for players in 2016.");
+        System.out.println(totalManOfMatchForPlayerIn2016);
+
     }
 }
