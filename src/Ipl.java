@@ -16,6 +16,7 @@ public class Ipl {
     static HashMap<String, Integer> totalManOfMatchForPlayerIn2016 = new HashMap<>();
     static HashMap<String, Integer> noOfSixesHitByDhoniInAllSeason = new HashMap<>();
     static HashMap<String, Integer> noOfCatchesByFielderIn2015 = new HashMap<>();
+    static HashMap<String, Integer> noOfBoundariesHitByKohliInAllSeason = new HashMap<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -152,6 +153,21 @@ public class Ipl {
         }
     }
 
+    public static void getNoOfBoundariesHitByKohliInAllSeason(String deliveriesLine){
+        String[] delivery;
+        delivery = deliveriesLine.split(",");
+        int batsmanRuns = Integer.parseInt(delivery[15]);
+        String batsmanName = delivery[6];
+
+        if((batsmanRuns == 6 || batsmanRuns == 4) && batsmanName.equals("V Kohli")) {
+            if (noOfBoundariesHitByKohliInAllSeason.containsKey("V Kohli")) {
+                noOfBoundariesHitByKohliInAllSeason.put("V Kohli", noOfBoundariesHitByKohliInAllSeason.get("V Kohli") + 1);
+            } else {
+                noOfBoundariesHitByKohliInAllSeason.put("V Kohli", 1);
+            }
+        }
+    }
+
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -182,6 +198,7 @@ public class Ipl {
                 topEconomicalBowlersIn2015(matchId2015, deliveriesLine);
                 getNoOfSixesHitByDhoniInAllSeason(deliveriesLine);
                 getNoOfCatchesByFielderIn2015(matchId2015, deliveriesLine);
+                getNoOfBoundariesHitByKohliInAllSeason(deliveriesLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -213,6 +230,8 @@ public class Ipl {
         System.out.println();
         System.out.println("8. No of catches by fielders in 2015.");
         System.out.println(noOfCatchesByFielderIn2015);
-
+        System.out.println();
+        System.out.println("9. No of boundaries hit by Kohli in all seasons.");
+        System.out.println(noOfBoundariesHitByKohliInAllSeason);
     }
 }
