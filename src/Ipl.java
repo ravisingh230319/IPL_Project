@@ -9,6 +9,9 @@ public class Ipl {
     static ArrayList<String> matchId2016 = new ArrayList<>();
     static HashMap<String,Integer> extraRunsConcededIn2016 = new HashMap<>();
     static ArrayList<String> matchId2015 = new ArrayList<>();
+    static HashMap<String,Integer> totalRuns = new HashMap<>();
+    static HashMap<String,Integer> legalDelivery = new HashMap<>();
+    static HashMap<String,Float> economy = new HashMap<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -53,6 +56,35 @@ public class Ipl {
         }
     }
 
+    public static void topEconomicalBowlersIn2015(ArrayList<String> matchesId, String deliveriesLine)
+    {
+        String[] delivery;
+        delivery = deliveriesLine.split(",");
+
+        if(matchesId.contains(delivery[0]))
+        {
+            int wideBall = Integer.parseInt(delivery[10]);
+            int noBall = Integer.parseInt(delivery[13]);
+            int runs = Integer.parseInt(delivery[17]);
+            String bowlerName = delivery[8];
+            if(legalDelivery.containsKey(bowlerName)) {
+                if(wideBall == 0 && noBall == 0)
+                    legalDelivery.put(bowlerName, legalDelivery.get(bowlerName) + 1);
+            }
+            else
+                legalDelivery.put(bowlerName, 1);
+
+            if(totalRuns.containsKey(bowlerName))
+            {
+                totalRuns.put(bowlerName, totalRuns.get(bowlerName) + runs);
+            }
+            else{
+                totalRuns.put(bowlerName, runs);
+            }
+            economy.put(bowlerName, totalRuns.get(bowlerName) * 6f / legalDelivery.get(bowlerName));
+        }
+    }
+
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -78,14 +110,21 @@ public class Ipl {
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
             {
                 getExtraRunsConcededPerTeamIn2016(matchId2016, deliveriesLine);
+                topEconomicalBowlersIn2015(matchId2015, deliveriesLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        List<Map.Entry<String,Float>> sortedEconomy = new ArrayList<>(economy.entrySet());
+        sortedEconomy.sort((economy1, economy2) -> economy1.getValue().compareTo(economy2.getValue()));
+
         System.out.println(matchesPerYear);
         System.out.println();
         System.out.println(matchesWonByAllTeamInAllYear);
         System.out.println();
         System.out.println(extraRunsConcededIn2016);
+        System.out.println();
+        System.out.println(sortedEconomy);
+
     }
 }
