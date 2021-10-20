@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Ipl {
     static HashMap<Integer, Integer> matchesPerYear = new HashMap<>();
+    static HashMap<String,Integer> matchesWonByAllTeamInAllYear = new HashMap<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -16,6 +17,21 @@ public class Ipl {
         else
             matchesPerYear.put(year, 1);
     }
+
+    public static void getMatchesWonByAllTeamInAllYear(String matchesLine) {
+        String[] match;
+        match = matchesLine.split(",");
+        String winnerTeam = match[10];
+
+        if(!winnerTeam.equals("") && matchesWonByAllTeamInAllYear.containsKey(winnerTeam)){
+            matchesWonByAllTeamInAllYear.put(winnerTeam, matchesWonByAllTeamInAllYear.get(winnerTeam) + 1);
+        }
+        else if(!winnerTeam.equals(""))
+        {
+            matchesWonByAllTeamInAllYear.put(winnerTeam, 1);
+        }
+    }
+
     public static void main(String[] args){
         String matchesPath = "/home/ravi/Mountblue/IPL_Project/input/matches.csv";
         String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/input/deliveries.csv";
@@ -30,6 +46,7 @@ public class Ipl {
 
             while((matchesLine = matchesBufferedReader.readLine()) != null) {
                 getMatchesPerYear(matchesLine);
+                getMatchesWonByAllTeamInAllYear(matchesLine);
             }
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
             {
@@ -38,5 +55,7 @@ public class Ipl {
             e.printStackTrace();
         }
         System.out.println(matchesPerYear);
+        System.out.println();
+        System.out.println(matchesWonByAllTeamInAllYear);
     }
 }
