@@ -6,6 +6,7 @@ import java.util.*;
 public class Ipl {
     static HashMap<Integer, Integer> matchesPerYear = new HashMap<>();
     static HashMap<String,Integer> matchesWonByAllTeamInAllYear = new HashMap<>();
+    static ArrayList<String> matchId2016 = new ArrayList<>();
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -47,6 +48,9 @@ public class Ipl {
             while((matchesLine = matchesBufferedReader.readLine()) != null) {
                 getMatchesPerYear(matchesLine);
                 getMatchesWonByAllTeamInAllYear(matchesLine);
+                if((matchesLine.split(","))[1].equals("2016")){
+                    matchId2016.add((matchesLine.split(","))[0]);
+                }
             }
             while((deliveriesLine = deliveriesBufferedReader.readLine()) != null)
             {
