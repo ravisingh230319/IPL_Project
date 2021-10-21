@@ -17,6 +17,8 @@ public class Ipl {
     static HashMap<String, Integer> noOfSixesHitByDhoniInAllSeason = new HashMap<>();
     static HashMap<String, Integer> noOfCatchesByFielderIn2015 = new HashMap<>();
     static HashMap<String, Integer> noOfBoundariesHitByKohliInAllSeason = new HashMap<>();
+    static HashMap<String, Integer> top10WicketTakingBowlersInAllSeason = new HashMap<>();
+
 
     public static void getMatchesPerYear(String matchesLine){
         String[] match;
@@ -137,9 +139,9 @@ public class Ipl {
     public static void getNoOfCatchesByFielderIn2015(ArrayList<String> matchesId, String deliveriesLine){
         String[] delivery;
         delivery = deliveriesLine.split(",");
-        String dismissalKind="";
-        String fielder="";
-        if(delivery.length>20){
+        String dismissalKind = "";
+        String fielder = "";
+        if(delivery.length > 20){
             dismissalKind = delivery[19];
             fielder = delivery[20];
         }
@@ -164,6 +166,24 @@ public class Ipl {
                 noOfBoundariesHitByKohliInAllSeason.put("V Kohli", noOfBoundariesHitByKohliInAllSeason.get("V Kohli") + 1);
             } else {
                 noOfBoundariesHitByKohliInAllSeason.put("V Kohli", 1);
+            }
+        }
+    }
+
+    public static void getTop10WicketTakingBowlersInAllSeason(String deliveriesLine){
+        String[] delivery;
+        delivery = deliveriesLine.split(",");
+        String dismissalKind = "";
+        String bowlersName = delivery[8];
+        if(delivery.length > 20){
+            dismissalKind = delivery[19];
+        }
+
+        if(!dismissalKind.equals("run out") && !dismissalKind.equals("")) {
+            if (top10WicketTakingBowlersInAllSeason.containsKey(bowlersName)) {
+                top10WicketTakingBowlersInAllSeason.put(bowlersName, top10WicketTakingBowlersInAllSeason.get(bowlersName) + 1);
+            } else {
+                top10WicketTakingBowlersInAllSeason.put(bowlersName, 1);
             }
         }
     }
@@ -199,12 +219,15 @@ public class Ipl {
                 getNoOfSixesHitByDhoniInAllSeason(deliveriesLine);
                 getNoOfCatchesByFielderIn2015(matchId2015, deliveriesLine);
                 getNoOfBoundariesHitByKohliInAllSeason(deliveriesLine);
+                getTop10WicketTakingBowlersInAllSeason(deliveriesLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         List<Map.Entry<String, Float>> sortedEconomy = new ArrayList<>(economy.entrySet());
         sortedEconomy.sort((economy1, economy2) -> economy1.getValue().compareTo(economy2.getValue()));
+        List<Map.Entry<String, Integer>> sortedWickets = new ArrayList<>(top10WicketTakingBowlersInAllSeason.entrySet());
+        sortedWickets.sort((wicket1, wicket2) -> wicket2.getValue().compareTo(wicket1.getValue()));
 
         System.out.println();
         System.out.println("1. Number of matches played per year of all the years in IPL.");
@@ -233,5 +256,16 @@ public class Ipl {
         System.out.println();
         System.out.println("9. No of boundaries hit by Kohli in all seasons.");
         System.out.println(noOfBoundariesHitByKohliInAllSeason);
+        System.out.println();
+        System.out.println("10. Top 10 wicket takers of all season.");
+        System.out.print("{");
+        for(int index = 0; index < 10; index++)
+        {
+            System.out.print(sortedWickets.get(index));
+            if(index < 9){
+                System.out.print(", ");
+            }
+        }
+        System.out.println("}");
     }
 }
