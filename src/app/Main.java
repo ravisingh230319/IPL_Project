@@ -29,6 +29,7 @@ public class Main {
 
         findMatchesPlayedPerYear(matchesData);
         findMatchesWonByAllTeamInAllYear(matchesData);
+        findExtraRunsConcededPerTeamIn2016(matchesData, deliveriesData);
     }
 
     private static List<Match> getMatchData() {
@@ -121,5 +122,26 @@ public class Main {
         }
         System.out.println("\n2. Number of matches won of all teams over all the years of IPL.");
         System.out.println(matchesWonByAllTeamInAllYear);
+    }
+
+    private static void findExtraRunsConcededPerTeamIn2016(List<Match> matchesData, List<Delivery> deliveriesData) {
+        List<Integer> matchIdIn2016 = new ArrayList<>();
+        Map<String, Integer> extraRunsConcededPerTeamIn2016 = new HashMap<>();
+        for(Match match : matchesData){
+            if(match.getSeason() == 2016) {
+                matchIdIn2016.add(match.getId());
+            }
+        }
+        for (Delivery delivery : deliveriesData) {
+            if (matchIdIn2016.contains(delivery.getMatchId())) {
+                if (extraRunsConcededPerTeamIn2016.containsKey(delivery.getBowlingTeam())) {
+                    extraRunsConcededPerTeamIn2016.put(delivery.getBowlingTeam(), extraRunsConcededPerTeamIn2016.get(delivery.getBowlingTeam()) + delivery.getExtraRuns());
+                } else {
+                    extraRunsConcededPerTeamIn2016.put(delivery.getBowlingTeam(), delivery.getExtraRuns());
+                }
+            }
+        }
+        System.out.println("\n3. For the year 2016 get the extra runs conceded per team.");
+        System.out.println(extraRunsConcededPerTeamIn2016);
     }
 }
