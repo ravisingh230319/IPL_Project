@@ -31,6 +31,7 @@ public class Main {
         findMatchesWonByAllTeamInAllYear(matchesData);
         findExtraRunsConcededPerTeamIn2016(matchesData, deliveriesData);
         findTopEconomicalBowlersIn2015(matchesData, deliveriesData);
+        findTossWonByAllTeamInAllYear(matchesData);
     }
 
     private static List<Match> getMatchData() {
@@ -180,4 +181,17 @@ public class Main {
         System.out.println(sortedEconomy);
     }
 
+    private static void findTossWonByAllTeamInAllYear(List<Match> matchesData) {
+        Map<String, Integer> tossWonByAllTeamInAllYear = new HashMap<>();
+
+        for(Match match : matchesData){
+            if (tossWonByAllTeamInAllYear.containsKey(match.getTossWinner())) {
+                tossWonByAllTeamInAllYear.put(match.getTossWinner(), tossWonByAllTeamInAllYear.get(match.getTossWinner()) + 1);
+            } else {
+                tossWonByAllTeamInAllYear.put(match.getTossWinner(), 1);
+            }
+        }
+        System.out.println("\n5. Number of toss won of all teams over all the years of IPL.");
+        System.out.println(tossWonByAllTeamInAllYear);
+    }
 }
