@@ -30,6 +30,7 @@ public class Main {
         findMatchesPlayedPerYear(matchesData);
         findMatchesWonByAllTeamInAllYear(matchesData);
         findExtraRunsConcededPerTeamIn2016(matchesData, deliveriesData);
+        findTopEconomicalBowlersIn2015(matchesData, deliveriesData);
     }
 
     private static List<Match> getMatchData() {
@@ -127,6 +128,7 @@ public class Main {
     private static void findExtraRunsConcededPerTeamIn2016(List<Match> matchesData, List<Delivery> deliveriesData) {
         List<Integer> matchIdIn2016 = new ArrayList<>();
         Map<String, Integer> extraRunsConcededPerTeamIn2016 = new HashMap<>();
+
         for(Match match : matchesData){
             if(match.getSeason() == 2016) {
                 matchIdIn2016.add(match.getId());
@@ -144,4 +146,38 @@ public class Main {
         System.out.println("\n3. For the year 2016 get the extra runs conceded per team.");
         System.out.println(extraRunsConcededPerTeamIn2016);
     }
+
+    private static void findTopEconomicalBowlersIn2015(List<Match> matchesData, List<Delivery> deliveriesData) {
+        List<Integer> matchIdIn2015 = new ArrayList<>();
+        Map<String, Integer> legalDelivery = new HashMap<>();
+        Map<String, Integer> totalRuns = new HashMap<>();
+        Map<String, Float> economy = new HashMap<>();
+        List<Map.Entry<String, Float>> sortedEconomy;
+
+        for(Match match : matchesData){
+            if(match.getSeason() == 2015) {
+                matchIdIn2015.add(match.getId());
+            }
+        }
+        for (Delivery delivery : deliveriesData) {
+            if (matchIdIn2015.contains(delivery.getMatchId())) {
+                if (legalDelivery.containsKey(delivery.getBowler()) && totalRuns.containsKey(delivery.getBowler())) {
+                    if (delivery.getWideRuns() == 0 && delivery.getNoballRuns() == 0) {
+                        legalDelivery.put(delivery.getBowler(), legalDelivery.get(delivery.getBowler()) + 1);
+                    }
+                    totalRuns.put(delivery.getBowler(), totalRuns.get(delivery.getBowler()) + delivery.getTotalRuns());
+                } else {
+                    legalDelivery.put(delivery.getBowler(), 1);
+                    totalRuns.put(delivery.getBowler(), delivery.getTotalRuns());
+                }
+                economy.put(delivery.getBowler(), totalRuns.get(delivery.getBowler()) * 6f / legalDelivery.get(delivery.getBowler()));
+            }
+        }
+
+        sortedEconomy = new ArrayList<>(economy.entrySet());
+        sortedEconomy.sort((economy1, economy2) -> economy1.getValue().compareTo(economy2.getValue()));
+        System.out.println("\n4. For the year 2015 get the top economical bowlers.");
+        System.out.println(sortedEconomy);
+    }
+
 }
