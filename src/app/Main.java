@@ -28,6 +28,7 @@ public class Main {
         List<Delivery> deliveriesData = getDeliveryData();
 
         findMatchesPlayedPerYear(matchesData);
+        findMatchesWonByAllTeamInAllYear(matchesData);
     }
 
     private static List<Match> getMatchData() {
@@ -104,5 +105,21 @@ public class Main {
         }
         System.out.println("\n1. Number of matches played per year of all the years in IPL.");
         System.out.println(matchesPlayedPerYear);
+    }
+
+    private static void findMatchesWonByAllTeamInAllYear(List<Match> matchesData) {
+        Map<String, Integer> matchesWonByAllTeamInAllYear = new HashMap<>();
+
+        for(Match match : matchesData){
+            if(!match.getWinner().equals("")) {
+                if (matchesWonByAllTeamInAllYear.containsKey(match.getWinner())) {
+                    matchesWonByAllTeamInAllYear.put(match.getWinner(), matchesWonByAllTeamInAllYear.get(match.getWinner()) + 1);
+                } else {
+                    matchesWonByAllTeamInAllYear.put(match.getWinner(), 1);
+                }
+            }
+        }
+        System.out.println("\n2. Number of matches won of all teams over all the years of IPL.");
+        System.out.println(matchesWonByAllTeamInAllYear);
     }
 }
