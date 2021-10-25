@@ -32,6 +32,7 @@ public class Main {
         findExtraRunsConcededPerTeamIn2016(matchesData, deliveriesData);
         findTopEconomicalBowlersIn2015(matchesData, deliveriesData);
         findTossWonByAllTeamInAllYear(matchesData);
+        findTotalManOfMatchForPlayerIn2016(matchesData);
     }
 
     private static List<Match> getMatchData() {
@@ -193,5 +194,23 @@ public class Main {
         }
         System.out.println("\n5. Number of toss won of all teams over all the years of IPL.");
         System.out.println(tossWonByAllTeamInAllYear);
+    }
+
+    private static void findTotalManOfMatchForPlayerIn2016(List<Match> matchesData) {
+        List<Integer> matchIdIn2016 = new ArrayList<>();
+        Map<String, Integer> totalManOfMatchForPlayerIn2016 = new HashMap<>();
+        for(Match match : matchesData){
+            if(match.getSeason()==2016 && !match.getPlayerOfMatch().equals("")) {
+                matchIdIn2016.add(match.getId());
+                if (totalManOfMatchForPlayerIn2016.containsKey(match.getPlayerOfMatch())) {
+                    totalManOfMatchForPlayerIn2016.put(match.getPlayerOfMatch(), totalManOfMatchForPlayerIn2016.get(match.getPlayerOfMatch()) + 1);
+                } else {
+                    totalManOfMatchForPlayerIn2016.put(match.getPlayerOfMatch(), 1);
+                }
+            }
+
+        }
+        System.out.println("\n6. Total no of man of the matches for players in 2016.");
+        System.out.println(totalManOfMatchForPlayerIn2016);
     }
 }
