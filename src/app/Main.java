@@ -35,6 +35,7 @@ public class Main {
         findTotalManOfMatchForPlayerIn2016(matchesData);
         findNoOfSixesHitByDhoniInAllSeason(deliveriesData);
         findNoOfCatchesByFielderIn2015(matchesData, deliveriesData);
+        findNoOfBoundariesHitByKohliInAllSeason(deliveriesData);
     }
 
     private static List<Match> getMatchData() {
@@ -253,5 +254,22 @@ public class Main {
         }
         System.out.println("\n8. No of catches by fielders in 2015.");
         System.out.println(noOfCatchesByFielderIn2015);
+    }
+
+    private static void findNoOfBoundariesHitByKohliInAllSeason(List<Delivery> deliveriesData) {
+        Map<String, Integer> noOfBoundariesHitByKohliInAllSeason = new HashMap<>();
+        final String KOHLI = "V Kohli";
+
+        for (Delivery delivery : deliveriesData) {
+            if ((delivery.getBatsmanRuns() == 6 || delivery.getBatsmanRuns() == 4) && delivery.getBatsman().equals(KOHLI)) {
+                if (noOfBoundariesHitByKohliInAllSeason.containsKey(KOHLI)) {
+                    noOfBoundariesHitByKohliInAllSeason.put(KOHLI, noOfBoundariesHitByKohliInAllSeason.get(KOHLI) + 1);
+                } else {
+                    noOfBoundariesHitByKohliInAllSeason.put(KOHLI, 1);
+                }
+            }
+        }
+        System.out.println("\n9. No of boundaries hit by Kohli in all seasons.");
+        System.out.println(noOfBoundariesHitByKohliInAllSeason);
     }
 }
