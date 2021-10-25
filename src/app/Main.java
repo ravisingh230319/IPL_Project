@@ -1,5 +1,10 @@
 package app;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
 public class Main {
     private static final int ID = 0;
     private static final int SEASON = 1;
@@ -19,6 +24,31 @@ public class Main {
     private static final int FIELDER = 20;
 
     public static void main(String args[]) {
+        List<Match> matchesData = getMatchData();
     }
 
+    private static List<Match> getMatchData() {
+        List<Match> matches = new ArrayList<>();
+        String matchesPath = "/home/ravi/Mountblue/IPL_Project/src/app/dataset/matches.csv";
+        String matchesLine;
+
+        try {
+            BufferedReader matchesBufferedReader = new BufferedReader(new FileReader(matchesPath));
+            matchesBufferedReader.readLine();
+
+            while ((matchesLine = matchesBufferedReader.readLine()) != null) {
+                Match match = new Match();
+                String[] matchData = matchesLine.split(",");
+                match.setId(Integer.parseInt(matchData[ID]));
+                match.setSeason(Integer.parseInt(matchData[SEASON]));
+                match.setTossWinner(matchData[TOSS_WINNER]);
+                match.setWinner(matchData[WINNER]);
+                match.setPlayerOfMatch(matchData[PLAYER_OF_MATCH]);
+                matches.add(match);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return matches;
+    }
 }
