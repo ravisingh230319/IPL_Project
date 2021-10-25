@@ -36,6 +36,7 @@ public class Main {
         findNoOfSixesHitByDhoniInAllSeason(deliveriesData);
         findNoOfCatchesByFielderIn2015(matchesData, deliveriesData);
         findNoOfBoundariesHitByKohliInAllSeason(deliveriesData);
+        findTop10WicketTakingBowlersInAllSeason(deliveriesData);
     }
 
     private static List<Match> getMatchData() {
@@ -271,5 +272,31 @@ public class Main {
         }
         System.out.println("\n9. No of boundaries hit by Kohli in all seasons.");
         System.out.println(noOfBoundariesHitByKohliInAllSeason);
+    }
+
+    private static void findTop10WicketTakingBowlersInAllSeason(List<Delivery> deliveryData) {
+        Map<String, Integer> unsortedWickets = new HashMap<>();
+        List<Map.Entry<String, Integer>> top10WicketTakingBowlersInAllSeason;
+
+        for (Delivery delivery : deliveryData) {
+            if (!delivery.getDismissalKind().equals("run out") && !delivery.getDismissalKind().equals("")) {
+                if (unsortedWickets.containsKey(delivery.getBowler())) {
+                    unsortedWickets.put(delivery.getBowler(), unsortedWickets.get(delivery.getBowler()) + 1);
+                } else {
+                    unsortedWickets.put(delivery.getBowler(), 1);
+                }
+            }
+        }
+        top10WicketTakingBowlersInAllSeason = new ArrayList<>(unsortedWickets.entrySet());
+        top10WicketTakingBowlersInAllSeason.sort((wicket1, wicket2) -> wicket2.getValue().compareTo(wicket1.getValue()));
+        System.out.println("\n10. Top 10 wicket takers of all season.");
+        System.out.print("{");
+        for (int index = 0; index < 10; index++) {
+            System.out.print(top10WicketTakingBowlersInAllSeason.get(index));
+            if (index < 9) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("}");
     }
 }
