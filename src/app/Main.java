@@ -26,6 +26,8 @@ public class Main {
     public static void main(String args[]) {
         List<Match> matchesData = getMatchData();
         List<Delivery> deliveriesData = getDeliveryData();
+
+        findMatchesPlayedPerYear(matchesData);
     }
 
     private static List<Match> getMatchData() {
@@ -88,5 +90,19 @@ public class Main {
             e.printStackTrace();
         }
         return deliveries;
+    }
+
+    private static void findMatchesPlayedPerYear(List<Match> matchesData) {
+        Map<Integer, Integer> matchesPlayedPerYear = new TreeMap<>();
+
+        for(Match match : matchesData){
+            if (matchesPlayedPerYear.containsKey(match.getSeason())) {
+                matchesPlayedPerYear.put(match.getSeason(), matchesPlayedPerYear.get(match.getSeason()) + 1);
+            } else {
+                matchesPlayedPerYear.put(match.getSeason(), 1);
+            }
+        }
+        System.out.println("\n1. Number of matches played per year of all the years in IPL.");
+        System.out.println(matchesPlayedPerYear);
     }
 }
