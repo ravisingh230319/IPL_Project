@@ -33,6 +33,7 @@ public class Main {
         findTopEconomicalBowlersIn2015(matchesData, deliveriesData);
         findTossWonByAllTeamInAllYear(matchesData);
         findTotalManOfMatchForPlayerIn2016(matchesData);
+        findNoOfSixesHitByDhoniInAllSeason(deliveriesData);
     }
 
     private static List<Match> getMatchData() {
@@ -200,7 +201,7 @@ public class Main {
         List<Integer> matchIdIn2016 = new ArrayList<>();
         Map<String, Integer> totalManOfMatchForPlayerIn2016 = new HashMap<>();
         for(Match match : matchesData){
-            if(match.getSeason()==2016 && !match.getPlayerOfMatch().equals("")) {
+            if(match.getSeason() == 2016 && !match.getPlayerOfMatch().equals("")) {
                 matchIdIn2016.add(match.getId());
                 if (totalManOfMatchForPlayerIn2016.containsKey(match.getPlayerOfMatch())) {
                     totalManOfMatchForPlayerIn2016.put(match.getPlayerOfMatch(), totalManOfMatchForPlayerIn2016.get(match.getPlayerOfMatch()) + 1);
@@ -212,5 +213,22 @@ public class Main {
         }
         System.out.println("\n6. Total no of man of the matches for players in 2016.");
         System.out.println(totalManOfMatchForPlayerIn2016);
+    }
+
+    private static void findNoOfSixesHitByDhoniInAllSeason(List<Delivery> deliveriesData) {
+        Map<String, Integer> noOfSixesHitByDhoniInAllSeason = new HashMap<>();
+        final String DHONI = "MS Dhoni";
+
+        for (Delivery delivery : deliveriesData) {
+            if (delivery.getBatsmanRuns() == 6 && delivery.getBatsman().equals(DHONI)) {
+                if (noOfSixesHitByDhoniInAllSeason.containsKey(DHONI)) {
+                    noOfSixesHitByDhoniInAllSeason.put(DHONI, noOfSixesHitByDhoniInAllSeason.get(DHONI) + 1);
+                } else {
+                    noOfSixesHitByDhoniInAllSeason.put(DHONI, 1);
+                }
+            }
+        }
+        System.out.println("\n7. No of sixes hit by Dhoni in all seasons.");
+        System.out.println(noOfSixesHitByDhoniInAllSeason);
     }
 }
