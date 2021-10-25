@@ -25,6 +25,7 @@ public class Main {
 
     public static void main(String args[]) {
         List<Match> matchesData = getMatchData();
+        List<Delivery> deliveriesData = getDeliveryData();
     }
 
     private static List<Match> getMatchData() {
@@ -50,5 +51,42 @@ public class Main {
             e.printStackTrace();
         }
         return matches;
+    }
+
+    private static List<Delivery> getDeliveryData() {
+        List<Delivery> deliveries = new ArrayList<>();
+        String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/src/app/dataset/deliveries.csv";
+        String deliveriesLine;
+
+        try {
+            BufferedReader deliveriesBufferedReader = new BufferedReader(new FileReader(deliveriesPath));
+            deliveriesBufferedReader.readLine();
+
+            while ((deliveriesLine = deliveriesBufferedReader.readLine()) != null) {
+                Delivery delivery = new Delivery();
+                String[] deliveryData = deliveriesLine.split(",");
+                delivery.setMatchId(Integer.parseInt(deliveryData[MATCH_ID]));
+                delivery.setBowlingTeam(deliveryData[BOWLING_TEAM]);
+                delivery.setBowler(deliveryData[BOWLER]);
+                delivery.setWideRuns(Integer.parseInt(deliveryData[WIDE_RUNS]));
+                delivery.setNoballRuns(Integer.parseInt(deliveryData[NO_BALL_RUNS]));
+                delivery.setExtraRuns(Integer.parseInt(deliveryData[EXTRA_RUNS]));
+                delivery.setTotalRuns(Integer.parseInt(deliveryData[TOTAL_RUNS]));
+                delivery.setBatsman(deliveryData[BATSMAN]);
+                delivery.setBatsmanRuns(Integer.parseInt(deliveryData[BATSMAN_RUNS]));
+                if(deliveryData.length>20){
+                    delivery.setDismissalKind(deliveryData[DISMISSAL_KIND]);
+                    delivery.setFielder(deliveryData[FIELDER]);
+                }
+                else {
+                    delivery.setDismissalKind("");
+                    delivery.setFielder("");
+                }
+                deliveries.add(delivery);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return deliveries;
     }
 }
