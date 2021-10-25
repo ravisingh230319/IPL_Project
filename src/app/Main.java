@@ -34,6 +34,7 @@ public class Main {
         findTossWonByAllTeamInAllYear(matchesData);
         findTotalManOfMatchForPlayerIn2016(matchesData);
         findNoOfSixesHitByDhoniInAllSeason(deliveriesData);
+        findNoOfCatchesByFielderIn2015(matchesData, deliveriesData);
     }
 
     private static List<Match> getMatchData() {
@@ -230,5 +231,27 @@ public class Main {
         }
         System.out.println("\n7. No of sixes hit by Dhoni in all seasons.");
         System.out.println(noOfSixesHitByDhoniInAllSeason);
+    }
+
+    private static void findNoOfCatchesByFielderIn2015(List<Match> matchesData, List<Delivery> deliveriesData) {
+        List<Integer> matchIdIn2015 = new ArrayList<>();
+        Map<String, Integer> noOfCatchesByFielderIn2015 = new HashMap<>();
+
+        for(Match match : matchesData){
+            if(match.getSeason() == 2015) {
+                matchIdIn2015.add(match.getId());
+            }
+        }
+        for (Delivery delivery : deliveriesData) {
+            if (delivery.getDismissalKind().equals("caught") && matchIdIn2015.contains(delivery.getMatchId())) {
+                if (noOfCatchesByFielderIn2015.containsKey(delivery.getFielder())) {
+                    noOfCatchesByFielderIn2015.put(delivery.getFielder(), noOfCatchesByFielderIn2015.get(delivery.getFielder()) + 1);
+                } else {
+                    noOfCatchesByFielderIn2015.put(delivery.getFielder(), 1);
+                }
+            }
+        }
+        System.out.println("\n8. No of catches by fielders in 2015.");
+        System.out.println(noOfCatchesByFielderIn2015);
     }
 }
