@@ -7,9 +7,6 @@ public class Match {
     private String tossWinner;
     private String playerOfMatch;
 
-    public Match() {
-    }
-
     public int getId() {
         return this.id;
     }
