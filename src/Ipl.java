@@ -22,8 +22,8 @@ public class Ipl {
     static List<Map.Entry<String, Integer>> sortedWickets;
 
     static void readMatchesAndDeliveriesData(){
-        String matchesPath = "/home/ravi/Mountblue/IPL_Project/src/app/dataset/matches.csv";
-        String deliveriesPath = "/home/ravi/Mountblue/IPL_Project/src/app/dataset/deliveries.csv";
+        String matchesPath = "src/com/ipl/dataset/matches.csv";
+        String deliveriesPath = "src/com/ipl/dataset/deliveries.csv";
         String matchesLine;
         String deliveriesLine;
 
