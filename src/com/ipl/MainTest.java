@@ -130,4 +130,14 @@ class MainTest {
                 () -> assertEquals("{V Kohli=544}", noOfBoundariesHitByKohliInAllSeason.toString())
         );
     }
+
+    @Test
+    void testGetTop10WicketTakingBowlersInAllSeason() {
+        List<Map.Entry<String, Integer>> top10WicketTakingBowlersInAllSeason = Main.getTop10WicketTakingBowlersInAllSeason(deliveries);
+        assertAll(
+                () -> assertEquals(10, top10WicketTakingBowlersInAllSeason.size()),
+                () -> assertEquals(70, top10WicketTakingBowlersInAllSeason.get(9).getValue()),
+                () -> assertEquals("A Mishra=97", top10WicketTakingBowlersInAllSeason.get(0).toString())
+        );
+    }
 }
