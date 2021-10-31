@@ -26,20 +26,29 @@ public class Main {
     public static void main(String args[]) {
         List<Match> matches = getMatchesForAllSeason();
         List<Delivery> deliveries = getDeliveriesForAllSeasons();
-
-        findMatchesPlayedPerYear(matches);
-        findMatchesWonByAllTeamInAllYear(matches);
-        findExtraRunsConcededPerTeamIn2016(matches, deliveries);
-        findTopEconomicalBowlersIn2015(matches, deliveries);
-        findTossWonByAllTeamInAllYear(matches);
-        findTotalManOfMatchForPlayerIn2016(matches);
-        findNoOfSixesHitByDhoniInAllSeason(deliveries);
-        findNoOfCatchesByFielderIn2015(matches, deliveries);
-        findNoOfBoundariesHitByKohliInAllSeason(deliveries);
-        findTop10WicketTakingBowlersInAllSeason(deliveries);
+        System.out.println("\n1. Number of matches played per year of all the years in IPL.");
+        System.out.println(getMatchesPlayedPerYear(matches));
+        System.out.println("\n2. Number of matches won of all teams over all the years of IPL.");
+        System.out.println(getMatchesWonByAllTeamInAllYear(matches));
+        System.out.println("\n3. For the year 2016 get the extra runs conceded per team.");
+        System.out.println(getExtraRunsConcededPerTeamIn2016(matches, deliveries));
+        System.out.println("\n4. For the year 2015 get the top economical bowlers.");
+        System.out.println(getTopEconomicalBowlersIn2015(matches, deliveries));
+        System.out.println("\n5. Number of toss won of all teams over all the years of IPL.");
+        System.out.println(getTossWonByAllTeamInAllYear(matches));
+        System.out.println("\n6. Total no of man of the matches for players in 2016.");
+        System.out.println(getTotalManOfMatchForPlayerIn2016(matches));
+        System.out.println("\n7. No of sixes hit by Dhoni in all seasons.");
+        System.out.println(getNoOfSixesHitByDhoniInAllSeason(deliveries));
+        System.out.println("\n8. No of catches by fielders in 2015.");
+        System.out.println(getNoOfCatchesByFielderIn2015(matches, deliveries));
+        System.out.println("\n9. No of boundaries hit by Kohli in all seasons.");
+        System.out.println(getNoOfBoundariesHitByKohliInAllSeason(deliveries));
+        System.out.println("\n10. Top 10 wicket takers of all season.");
+        System.out.println(getTop10WicketTakingBowlersInAllSeason(deliveries));
     }
 
-    private static List<Match> getMatchesForAllSeason() {
+    public static List<Match> getMatchesForAllSeason() {
         List<Match> matches = new ArrayList<>();
         String readMatchesLine;
 
@@ -63,7 +72,7 @@ public class Main {
         return matches;
     }
 
-    private static List<Delivery> getDeliveriesForAllSeasons() {
+    public static List<Delivery> getDeliveriesForAllSeasons() {
         List<Delivery> deliveries = new ArrayList<>();
         String readDeliveriesLine;
 
@@ -99,7 +108,7 @@ public class Main {
         return deliveries;
     }
 
-    private static void findMatchesPlayedPerYear(List<Match> matches) {
+    public static Map<Integer, Integer> getMatchesPlayedPerYear(List<Match> matches) {
         Map<Integer, Integer> matchesPlayedPerYear = new TreeMap<>();
 
         for(Match match : matches){
@@ -109,11 +118,10 @@ public class Main {
                 matchesPlayedPerYear.put(match.getSeason(), 1);
             }
         }
-        System.out.println("\n1. Number of matches played per year of all the years in IPL.");
-        System.out.println(matchesPlayedPerYear);
+        return matchesPlayedPerYear;
     }
 
-    private static void findMatchesWonByAllTeamInAllYear(List<Match> matches) {
+    public static Map<String, Integer> getMatchesWonByAllTeamInAllYear(List<Match> matches) {
         Map<String, Integer> matchesWonByAllTeamInAllYear = new HashMap<>();
 
         for(Match match : matches){
@@ -125,11 +133,10 @@ public class Main {
                 }
             }
         }
-        System.out.println("\n2. Number of matches won of all teams over all the years of IPL.");
-        System.out.println(matchesWonByAllTeamInAllYear);
+        return matchesWonByAllTeamInAllYear;
     }
 
-    private static void findExtraRunsConcededPerTeamIn2016(List<Match> matches, List<Delivery> deliveries) {
+    public static Map<String, Integer> getExtraRunsConcededPerTeamIn2016(List<Match> matches, List<Delivery> deliveries) {
         List<Integer> matchIdIn2016 = new ArrayList<>();
         Map<String, Integer> extraRunsConcededPerTeamIn2016 = new HashMap<>();
 
@@ -147,11 +154,10 @@ public class Main {
                 }
             }
         }
-        System.out.println("\n3. For the year 2016 get the extra runs conceded per team.");
-        System.out.println(extraRunsConcededPerTeamIn2016);
+        return extraRunsConcededPerTeamIn2016;
     }
 
-    private static void findTopEconomicalBowlersIn2015(List<Match> matches, List<Delivery> deliveries) {
+    public static List<Map.Entry<String, Float>> getTopEconomicalBowlersIn2015(List<Match> matches, List<Delivery> deliveries) {
         List<Integer> matchIdIn2015 = new ArrayList<>();
         Map<String, Integer> legalDeliveries = new HashMap<>();
         Map<String, Integer> totalRuns = new HashMap<>();
@@ -179,11 +185,10 @@ public class Main {
         }
         sortedEconomy = new ArrayList<>(unsortedEconomy.entrySet());
         sortedEconomy.sort((economy1, economy2) -> economy1.getValue().compareTo(economy2.getValue()));
-        System.out.println("\n4. For the year 2015 get the top economical bowlers.");
-        System.out.println(sortedEconomy);
+        return sortedEconomy;
     }
 
-    private static void findTossWonByAllTeamInAllYear(List<Match> matches) {
+    public static Map<String, Integer> getTossWonByAllTeamInAllYear(List<Match> matches) {
         Map<String, Integer> tossWonByAllTeamInAllYear = new HashMap<>();
 
         for(Match match : matches){
@@ -193,11 +198,10 @@ public class Main {
                 tossWonByAllTeamInAllYear.put(match.getTossWinner(), 1);
             }
         }
-        System.out.println("\n5. Number of toss won of all teams over all the years of IPL.");
-        System.out.println(tossWonByAllTeamInAllYear);
+        return tossWonByAllTeamInAllYear;
     }
 
-    private static void findTotalManOfMatchForPlayerIn2016(List<Match> matches) {
+    public static Map<String, Integer> getTotalManOfMatchForPlayerIn2016(List<Match> matches) {
         List<Integer> matchIdIn2016 = new ArrayList<>();
         Map<String, Integer> totalManOfMatchForPlayerIn2016 = new HashMap<>();
 
@@ -212,11 +216,10 @@ public class Main {
             }
 
         }
-        System.out.println("\n6. Total no of man of the matches for players in 2016.");
-        System.out.println(totalManOfMatchForPlayerIn2016);
+        return totalManOfMatchForPlayerIn2016;
     }
 
-    private static void findNoOfSixesHitByDhoniInAllSeason(List<Delivery> deliveries) {
+    public static Map<String, Integer> getNoOfSixesHitByDhoniInAllSeason(List<Delivery> deliveries) {
         Map<String, Integer> noOfSixesHitByDhoniInAllSeason = new HashMap<>();
         final String DHONI = "MS Dhoni";
 
@@ -229,11 +232,10 @@ public class Main {
                 }
             }
         }
-        System.out.println("\n7. No of sixes hit by Dhoni in all seasons.");
-        System.out.println(noOfSixesHitByDhoniInAllSeason);
+        return noOfSixesHitByDhoniInAllSeason;
     }
 
-    private static void findNoOfCatchesByFielderIn2015(List<Match> matches, List<Delivery> deliveries) {
+    public static Map<String, Integer> getNoOfCatchesByFielderIn2015(List<Match> matches, List<Delivery> deliveries) {
         List<Integer> matchIdIn2015 = new ArrayList<>();
         Map<String, Integer> noOfCatchesByFielderIn2015 = new HashMap<>();
 
@@ -251,11 +253,10 @@ public class Main {
                 }
             }
         }
-        System.out.println("\n8. No of catches by fielders in 2015.");
-        System.out.println(noOfCatchesByFielderIn2015);
+        return noOfCatchesByFielderIn2015;
     }
 
-    private static void findNoOfBoundariesHitByKohliInAllSeason(List<Delivery> deliveries) {
+    public static Map<String, Integer> getNoOfBoundariesHitByKohliInAllSeason(List<Delivery> deliveries) {
         Map<String, Integer> noOfBoundariesHitByKohliInAllSeason = new HashMap<>();
         final String KOHLI = "V Kohli";
 
@@ -268,11 +269,10 @@ public class Main {
                 }
             }
         }
-        System.out.println("\n9. No of boundaries hit by Kohli in all seasons.");
-        System.out.println(noOfBoundariesHitByKohliInAllSeason);
+        return noOfBoundariesHitByKohliInAllSeason;
     }
 
-    private static void findTop10WicketTakingBowlersInAllSeason(List<Delivery> deliveries) {
+    public static List<Map.Entry<String, Integer>> getTop10WicketTakingBowlersInAllSeason(List<Delivery> deliveries) {
         Map<String, Integer> unsortedWickets = new HashMap<>();
         List<Map.Entry<String, Integer>> top10WicketTakingBowlersInAllSeason;
 
@@ -287,14 +287,9 @@ public class Main {
         }
         top10WicketTakingBowlersInAllSeason = new ArrayList<>(unsortedWickets.entrySet());
         top10WicketTakingBowlersInAllSeason.sort((wicket1, wicket2) -> wicket2.getValue().compareTo(wicket1.getValue()));
-        System.out.println("\n10. Top 10 wicket takers of all season.");
-        System.out.print("{");
-        for (int index = 0; index < 10; index++) {
-            System.out.print(top10WicketTakingBowlersInAllSeason.get(index));
-            if (index < 9) {
-                System.out.print(", ");
-            }
+        while(top10WicketTakingBowlersInAllSeason.size() > 10){
+            top10WicketTakingBowlersInAllSeason.remove(top10WicketTakingBowlersInAllSeason.size()-1);
         }
-        System.out.println("}");
+        return top10WicketTakingBowlersInAllSeason;
     }
 }
