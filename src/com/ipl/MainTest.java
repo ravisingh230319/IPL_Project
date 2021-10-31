@@ -121,4 +121,13 @@ class MainTest {
                 () -> assertEquals(8, noOfCatchesByFielderIn2015.get("MS Dhoni"))
         );
     }
+
+    @Test
+    void testGetNoOfBoundariesHitByKohliInAllSeason() {
+        Map<String, Integer> noOfBoundariesHitByKohliInAllSeason = Main.getNoOfBoundariesHitByKohliInAllSeason(deliveries);
+        assertAll(
+                () -> assertNotEquals(0, noOfBoundariesHitByKohliInAllSeason.size()),
+                () -> assertEquals("{V Kohli=544}", noOfBoundariesHitByKohliInAllSeason.toString())
+        );
+    }
 }
