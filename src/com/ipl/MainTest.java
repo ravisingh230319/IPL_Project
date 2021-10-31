@@ -46,4 +46,15 @@ class MainTest {
                 () -> assertEquals(59, matchesPlayedPerYear.get(2017))
         );
     }
+
+    @Test
+    void testGetMatchesWonByAllTeamInAllYear() {
+        Map<String,Integer> matchesWonByAllTeamInAllYear = Main.getMatchesWonByAllTeamInAllYear(matches);
+        assertAll(
+                () -> assertFalse(matchesWonByAllTeamInAllYear.isEmpty()),
+                () -> assertEquals(14, matchesWonByAllTeamInAllYear.size()),
+                () -> assertFalse(matchesWonByAllTeamInAllYear.containsKey("Bengal Tigers")),
+                () -> assertEquals(92, matchesWonByAllTeamInAllYear.get("Mumbai Indians"))
+        );
+    }
 }
