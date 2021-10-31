@@ -100,4 +100,14 @@ class MainTest {
         );
     }
 
+    @Test
+    void testGetNoOfSixesHitByDhoniInAllSeason() {
+        Map<String, Integer> noOfSixesHitByDhoniInAllSeason = Main.getNoOfSixesHitByDhoniInAllSeason(deliveries);
+        assertAll(
+                () -> assertFalse(noOfSixesHitByDhoniInAllSeason.isEmpty()),
+                () -> assertFalse(noOfSixesHitByDhoniInAllSeason.containsKey("V Kohli")),
+                () -> assertTrue(noOfSixesHitByDhoniInAllSeason.containsKey("MS Dhoni")),
+                () -> assertEquals(156, noOfSixesHitByDhoniInAllSeason.get("MS Dhoni"))
+        );
+    }
 }
