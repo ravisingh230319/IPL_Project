@@ -78,4 +78,14 @@ class MainTest {
                 () -> assertEquals("RN ten Doeschate=4.0", sortedEconomy.get(0).toString())
         );
     }
+
+    @Test
+    void testGetTossWonByAllTeamInAllYear() {
+        Map<String, Integer> tossWonByAllTeamInAllYear = Main.getTossWonByAllTeamInAllYear(matches);
+        assertAll(
+                () -> assertEquals(14, tossWonByAllTeamInAllYear.size()),
+                () -> assertFalse(tossWonByAllTeamInAllYear.containsKey("Team ABC")),
+                () -> assertEquals(20, tossWonByAllTeamInAllYear.get("Pune Warriors"))
+        );
+    }
 }
