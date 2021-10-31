@@ -110,4 +110,15 @@ class MainTest {
                 () -> assertEquals(156, noOfSixesHitByDhoniInAllSeason.get("MS Dhoni"))
         );
     }
+
+    @Test
+    void testGetNoOfCatchesByFielderIn2015() {
+        Map<String, Integer> noOfCatchesByFielderIn2015 = Main.getNoOfCatchesByFielderIn2015(matches,deliveries);
+        assertAll(
+                () -> assertFalse(noOfCatchesByFielderIn2015.isEmpty()),
+                () -> assertFalse(noOfCatchesByFielderIn2015.containsKey("Ravi")),
+                () -> assertTrue(noOfCatchesByFielderIn2015.containsKey("MS Dhoni")),
+                () -> assertEquals(8, noOfCatchesByFielderIn2015.get("MS Dhoni"))
+        );
+    }
 }
