@@ -3,6 +3,7 @@ package com.ipl;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
+import java.util.Map;
 
 class MainTest {
     List<Match> matches = Main.getMatchesForAllSeason();
@@ -31,6 +32,18 @@ class MainTest {
                 () -> assertEquals("TS Mills", deliveries.get(0).getBowler()),
                 () -> assertEquals(0, deliveries.get(0).getExtraRuns()),
                 () -> assertEquals("DA Warner", deliveries.get(0).getBatsman())
+        );
+    }
+
+    @Test
+    void testGetMatchesPlayedPerYear() {
+        Map<Integer,Integer> matchesPlayedPerYear = Main.getMatchesPlayedPerYear(matches);
+        assertAll(
+                () -> assertFalse(matchesPlayedPerYear.isEmpty()),
+                () -> assertFalse(matchesPlayedPerYear.containsKey(2018)),
+                () -> assertEquals(10, matchesPlayedPerYear.size()),
+                () -> assertEquals(58, matchesPlayedPerYear.get(2008)),
+                () -> assertEquals(59, matchesPlayedPerYear.get(2017))
         );
     }
 }
