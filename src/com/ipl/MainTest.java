@@ -88,4 +88,16 @@ class MainTest {
                 () -> assertEquals(20, tossWonByAllTeamInAllYear.get("Pune Warriors"))
         );
     }
+
+    @Test
+    void testGetTotalManOfMatchForPlayerIn2016() {
+        Map<String, Integer> totalManOfMatchForPlayerIn2016 = Main.getTotalManOfMatchForPlayerIn2016(matches);
+        assertAll(
+                () -> assertNotEquals(0, totalManOfMatchForPlayerIn2016.size()),
+                () -> assertFalse(totalManOfMatchForPlayerIn2016.containsKey("Ravi")),
+                () -> assertTrue(totalManOfMatchForPlayerIn2016.containsKey("M Vohra")),
+                () -> assertEquals(5, totalManOfMatchForPlayerIn2016.get("V Kohli"))
+        );
+    }
+
 }
