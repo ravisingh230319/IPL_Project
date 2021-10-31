@@ -37,7 +37,7 @@ class MainTest {
 
     @Test
     void testGetMatchesPlayedPerYear() {
-        Map<Integer,Integer> matchesPlayedPerYear = Main.getMatchesPlayedPerYear(matches);
+        Map<Integer, Integer> matchesPlayedPerYear = Main.getMatchesPlayedPerYear(matches);
         assertAll(
                 () -> assertFalse(matchesPlayedPerYear.isEmpty()),
                 () -> assertFalse(matchesPlayedPerYear.containsKey(2018)),
@@ -49,7 +49,7 @@ class MainTest {
 
     @Test
     void testGetMatchesWonByAllTeamInAllYear() {
-        Map<String,Integer> matchesWonByAllTeamInAllYear = Main.getMatchesWonByAllTeamInAllYear(matches);
+        Map<String, Integer> matchesWonByAllTeamInAllYear = Main.getMatchesWonByAllTeamInAllYear(matches);
         assertAll(
                 () -> assertFalse(matchesWonByAllTeamInAllYear.isEmpty()),
                 () -> assertEquals(14, matchesWonByAllTeamInAllYear.size()),
@@ -66,6 +66,16 @@ class MainTest {
                 () -> assertFalse(extraRunsConcededPerTeamIn2016.containsKey("Bengal Tigers")),
                 () -> assertEquals(8, extraRunsConcededPerTeamIn2016.size()),
                 () -> assertEquals(98, extraRunsConcededPerTeamIn2016.get("Gujarat Lions"))
+        );
+    }
+
+    @Test
+    void testGetTopEconomicalBowlersIn2015() {
+        List<Map.Entry<String, Float>> sortedEconomy = Main.getTopEconomicalBowlersIn2015(matches,deliveries);
+        assertAll(
+                () -> assertFalse(sortedEconomy.isEmpty()),
+                () -> assertEquals("RN ten Doeschate", sortedEconomy.get(0).getKey()),
+                () -> assertEquals("RN ten Doeschate=4.0", sortedEconomy.get(0).toString())
         );
     }
 }
