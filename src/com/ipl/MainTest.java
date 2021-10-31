@@ -57,4 +57,15 @@ class MainTest {
                 () -> assertEquals(92, matchesWonByAllTeamInAllYear.get("Mumbai Indians"))
         );
     }
+
+    @Test
+    void testGetExtraRunsConcededPerTeamIn2016() {
+        Map<String, Integer> extraRunsConcededPerTeamIn2016 = Main.getExtraRunsConcededPerTeamIn2016(matches,deliveries);
+        assertAll(
+                () -> assertFalse(extraRunsConcededPerTeamIn2016.isEmpty()),
+                () -> assertFalse(extraRunsConcededPerTeamIn2016.containsKey("Bengal Tigers")),
+                () -> assertEquals(8, extraRunsConcededPerTeamIn2016.size()),
+                () -> assertEquals(98, extraRunsConcededPerTeamIn2016.get("Gujarat Lions"))
+        );
+    }
 }
